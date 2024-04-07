@@ -1,0 +1,48 @@
+http:
+    routers:
+        ibank-core:
+            rule: "Host(`/api`)"
+            service: ibanking-core
+            entryPoints:
+              - "web"
+        payment:
+            rule: "Host(`/payment`)"
+            service: payment
+            entryPoints:
+              - "web"
+        transfer:
+            rule: "Host(`/transfer`)"
+            service: transfer
+            entryPoints:
+              - "web"
+        user:
+            rule: "Host(`/user`)"
+            service: user
+            entryPoints:
+              - "web"
+        loan-processor:
+            rule: "Host(`/loan-processor`)"
+            service: loan-processor
+            entryPoints:
+              - "web"
+    services:
+        loan-processor:
+            loadBalancer:
+                servers:
+                    - url: "http://loan-processor:8085"
+        transfer:
+            loadBalancer:
+                servers:
+                    - url: "http://transfer:8094"
+        user:
+            loadBalancer:
+                servers:
+                    - url: "http://user:8081"
+        payment:
+            loadBalancer:
+                servers:
+                    - url: "http://payment:8080"
+        ibanking-core:
+            loadBalancer:
+                servers:
+                    - url: "http://ibanking-core:8080"
