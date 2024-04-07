@@ -20,16 +20,16 @@ http:
             service: user
             entryPoints:
               - "web"
-        loan-processor:
-            rule: "Host(`/loan-processor`)"
-            service: loan-processor
+        golang:
+            rule: "Host(`diploma.kz`) && Path (`/`)"
+            service: golang
             entryPoints:
               - "web"
     services:
-        loan-processor:
+        golang:
             loadBalancer:
                 servers:
-                    - url: "http://loan-processor:8085"
+                    - url: "http://golang:8080"
         transfer:
             loadBalancer:
                 servers:
